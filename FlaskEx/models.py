@@ -15,5 +15,8 @@ class LED(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     red = db.Column(db.String(2))
     green = db.Column(db.String(2))
-    yellow =db.Column(db.String(2))
+    yellow = db.Column(db.String(2))
+    time = db.Column(db.String(30))
+    
+    
 

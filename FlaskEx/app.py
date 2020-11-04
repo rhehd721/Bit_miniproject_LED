@@ -1,11 +1,12 @@
 import os
+import time
 from flask import Flask
 from flask import request
 from flask import session
 from flask import redirect
 from flask import render_template
 from models import db
-from models import Myuser
+from models import Myuser, LED
 
 from flask_wtf.csrf import CSRFProtect
 from forms import RegisterForm, LoginForm
@@ -81,4 +82,61 @@ if __name__ == "__main__":
 
 
 
+# 여기서 부터 LED
+
+# @app.route('/login', methods=['GET','POST'])
+# def login():
+#     form = LoginForm()
+#     if form.validate_on_submit():
+#         session['userid'] = form.data.get('userid')
+#         print("login_sumit")
+#         return redirect('/')
+
+#     return render_template('login.html', form=form)
+
+
+
+@app.route('/led/<rgy>/<num>', methods=['GET','POST'])
+def led(rgy, num):
+
+    now = time.strftime('%c', time.localtime(time.time()))
+
+    rgy_dic = {'r':14,'g':15,'y':18 }
+
+    LEDmodels = LED()   # 모델 넣어주기
+
+    if (rgy == all):
+        if ( num == 1 or num == 0):
+            LEDmodels.red = num
+            LEDmodels.green = num
+            LEDmodels.yellow = num
+            LEDmodels.time = now
+
+        else:   # 예외처리
+            print("잘못된 슷자를 입력하였습니다")
+    
+
+    else:   # all 이 아닐경우
+        if ( num == 1 or num == 0):
+            if('r' in rgy):
+                LEDmodels.red = num   # 모델에 값 넣어주기
+                LEDmodels.time = now
+            if('g' in rgy):
+                LEDmodels.green = num   # 모델에 값 넣어주기
+                LEDmodels.time = now
+            if('y' in rgy):
+                LEDmodels.yellow = num   # 모델에 값 넣어주기
+                LEDmodels.time = now
+            
+            if('r' or 'g' or 'y' not in rgy):   # 예외처리
+                print("잘못된 LED를 입력하였습니다.")
+            
+
+        else:   # 예외처리
+            print("잘못된 슷자를 입력하였습니다")
+
+
+    return render_template('./templates/led/g.html')
+
+    
 

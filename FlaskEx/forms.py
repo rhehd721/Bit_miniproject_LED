@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms import PasswordField
 from wtforms.validators import DataRequired, EqualTo
-from models import Myuser
+from models import Myuser, LED
 
 class RegisterForm(FlaskForm):
     userid = StringField('userid', validators=[DataRequired()])
@@ -27,3 +27,4 @@ class LoginForm(FlaskForm):
 
     userid = StringField('userid', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired(), UserPassword()])
+
